@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]) {
       score += books[tmp];
     }
 
-    libraries.at(i).punteggio = static_cast<float>((score * libraries.at(i).bookPDay)) / (libraries.at(i).booksSize * libraries.at(i).regTime);
+    libraries.at(i).punteggio = static_cast<float>((score * libraries.at(i).bookPDay)) / (libraries.at(i).booksSize * libraries.at(i).regTime * libraries.at(i).regTime);
 
     sort(libraries.at(i).books.begin(), libraries.at(i).books.end(), [=](int b1, int b2) { return books[b1] > books[b2]; });
   }
@@ -64,10 +64,10 @@ int main(int argc, char const *argv[]) {
 
   // for(int l = 0; l < M; l++) {
   //   cout << "Library " << libraries.at(libOrder[l]).id << ", regTime: " << libraries.at(libOrder[l]).regTime << ", score: " << libraries.at(libOrder[l]).punteggio << endl;
-  //   // for(auto &b : l.books) {
-  //   //   cout << "(" << b << ", " << books[b] << "), ";
-  //   // }
-  //   // cout << endl;
+  //   for(auto &b : libraries.at(libOrder[l]).books) {
+  //     cout << "(" << b << ", " << books[b] << "), ";
+  //   }
+  //   cout << endl;
   // }
 
   /* Order has been decided, now run simulation. */
@@ -80,17 +80,26 @@ int main(int argc, char const *argv[]) {
   unsigned int day = 0;
   unsigned int libIndex = 0;
 
-  while(day <= D) {
+  unsigned int lmao = 0;
+
+  while(day < D) {
+
+    //cerr << "Day " << day << endl;
 
     for(auto &l : simLibraries) {
+      //cerr << "Lib " << l << " bpd " << libraries.at(l).bookPDay << " ";
       int bookScannedToday = 0;
       while(bookScannedToday < libraries.at(l).bookPDay && libraries.at(l).simBookIndex < libraries.at(l).booksSize) {
+        //cerr << "Book " << libraries.at(l).books.at(libraries.at(l).simBookIndex) << " ";
         if(!bookScanned.at(libraries.at(l).books.at(libraries.at(l).simBookIndex))) {
+          //cerr << "scanning" << " value " << books[libraries.at(l).books.at(libraries.at(l).simBookIndex)] << " " << endl;
           simBooks.at(l).push_back(libraries.at(l).books.at(libraries.at(l).simBookIndex));
           bookScanned.at(libraries.at(l).books.at(libraries.at(l).simBookIndex)) = true;
+          lmao += books[libraries.at(l).books.at(libraries.at(l).simBookIndex)];
           bookScannedToday++;
           libraries.at(l).simBookIndex++;
         } else {
+          //cerr << "already scanned" << endl;
           libraries.at(l).simBookIndex++;
         }
       }
@@ -121,6 +130,8 @@ int main(int argc, char const *argv[]) {
       cout << endl;
     }
   }
+
+  cerr << lmao << endl;
 
   return 0;
 }
