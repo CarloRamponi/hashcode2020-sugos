@@ -106,13 +106,13 @@ int main(int argc, char const *argv[]) {
             libraries.at(l).simBookIndex++;
           }
         }
-        
+
       }
     }
 
-    if(registering >= day && libIndex < M) {
+    if(day >= registering && libIndex < M) {
       simLibraries.push_back(libraries.at(libOrder[libIndex]).id);
-      registering += libraries.at(libOrder[libIndex]).regTime;
+      registering = day + libraries.at(libOrder[libIndex]).regTime;
       libraries.at(libOrder[libIndex]).registerDay = registering;
       libIndex++;
     }
