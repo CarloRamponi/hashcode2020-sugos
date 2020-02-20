@@ -111,6 +111,7 @@ int main(int argc, char const *argv[]) {
     }
 
     if(day >= registering && libIndex < M) {
+      //cerr << "Day " << day << " Registering lib " << libIndex << " with regTime " << libraries.at(libOrder[libIndex]).regTime << endl;
       simLibraries.push_back(libraries.at(libOrder[libIndex]).id);
       registering = day + libraries.at(libOrder[libIndex]).regTime;
       libraries.at(libOrder[libIndex]).registerDay = registering;
